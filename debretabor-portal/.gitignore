@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+dist/
+*.log
+backend/uploads/*
+!backend/uploads/.gitkeep
+.DS_Store
+
+# private complaint attachments
+backend/private-uploads/*
+!backend/private-uploads/.gitkeep

@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-scale: 1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: calc(1rem * var(--font-scale));
+}
+
+/* Visible keyboard focus everywhere — accessibility floor, not optional. */
+:focus-visible {
+  outline: 3px solid #f3ae2b;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High-visibility theme: raises contrast and locks a larger base size,
+   for citizens who selected it via the accessibility bar. */
+.theme-high-visibility {
+  --font-scale: 1.15;
+}
+.theme-high-visibility body {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+[lang="am"] {
+  font-family: 'Noto Sans Ethiopic', ui-sans-serif, sans-serif;
+}
+
+/* Dark theme: the pages are built with light utility classes, so the dark palette is applied centrally here. */
+.dark body { background: #0b1220; color: #e5e7eb; }
+.dark .bg-white { background-color: #111a2e !important; }
+.dark .bg-gray-50, .dark .bg-gray-100 { background-color: #0b1220 !important; }
+.dark .bg-blue-50 { background-color: #14233f !important; }
+.dark .text-gray-900, .dark .text-gray-800, .dark .text-gray-700 { color: #f1f5f9 !important; }
+.dark .text-gray-600, .dark .text-gray-500, .dark .text-gray-400 { color: #b6c2d4 !important; }
+.dark .text-blue-900, .dark .text-blue-800, .dark .text-\[\#004280\], .dark .text-\[\#003366\] { color: #93c5fd !important; }
+.dark .border-gray-100, .dark .border-gray-200, .dark .border-gray-300 { border-color: #263449 !important; }
+.dark input, .dark select, .dark textarea { background-color: #0b1220; color: #f1f5f9; border-color: #334155; }
+.dark header.bg-white { background-color: #0f1a30 !important; }
