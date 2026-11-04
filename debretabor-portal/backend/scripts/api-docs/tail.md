@@ -43,4 +43,4 @@ curl -s localhost:5000/api/complaints/track/DT-CMP-7K4Q9XM2
 
 ## 7. Changing the API
 
-Add or edit a file in `backend/src/resources/` (columns, enums, files, visibility, filters), mount it in `backend/src/routes/index.js`, run `npm test` and `npm run docs:api`. The CRUD layer builds the routes, validation, SQL, file clean-up and this documentation from that one file.
+Add or edit a file in `backend/src/resources/` (columns, enums, files, visibility, filters), mount it in `backend/src/routes/index.js`, run `npm run docs:api`. The CRUD layer builds the routes, validation, SQL, file clean-up and this documentation from that one file.
