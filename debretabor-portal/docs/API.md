@@ -1,7 +1,7 @@
 # Debre Tabor Portal — REST API
 
 Base URL: `http://localhost:5000/api` (set the real host in production). All bodies are JSON unless a route accepts files, in which case use `multipart/form-data`.
-This file is **generated** from the code (`npm run docs:api` in `backend/`); the sections 5+ field tables always match `database/schema.sql`.
+
 
 ## 1. Conventions
 
@@ -10,7 +10,7 @@ This file is **generated** from the code (`npm run docs:api` in `backend/`); the
 | Success | `{ "success": true, "data": ... }` · lists add `count` · paged lists (`?limit=`) add `total`, `page`, `limit` |
 | Failure | `{ "success": false, "message": "...", "errors": { field: "..." } }` (`errors` only for validation) |
 | Auth | `Authorization: Bearer <JWT>` obtained from `POST /api/auth/login` (valid 12 h). The account is re-checked on every request, so a deactivated user or changed role applies immediately |
-| Roles | **Admin** (everything, can register users, delete complaints) · **Editor** (create/update/delete content, handle complaints) · **Viewer** (read-only: sees drafts via `/admin/all`, no complaint access) |
+| Roles | **Admin** (everything, delete complaints) · **Editor** (create/update/delete content, handle complaints) · **Viewer** (read-only: sees drafts via `/admin/all`, no complaint access) |
 | Bilingual | Every text has `<field>_en` (required where the schema says NOT NULL) and `<field>_am` (optional). Clients show `_am` and fall back to `_en` |
 | Lists | `?limit=` (1–500, default 500), `?page=`, `?search=` (matches the resource's text columns, `%`/`_` are escaped), plus per-resource filters (listed below). Unknown filters are ignored |
 | Public visibility | Public `GET` returns only published / active / non-expired rows. `GET /admin/all` returns everything |
@@ -39,7 +39,6 @@ This file is **generated** from the code (`npm run docs:api` in `backend/`); the
 | POST | `/login` | public | `{ email, password }` | `{ token, user: { id, username, email, role } }` · same `401` for unknown e-mail, wrong password and disabled account |
 | GET | `/profile` | signed in | — | `{ user }` |
 | PUT | `/profile` | signed in | `{ username?, email?, current_password?, new_password? }` | Changing the password needs `current_password` |
-| POST | `/register` | Admin | `{ username, email, password, role? }` | `201 { userId }` · role ∈ Admin/Editor/Viewer (default Editor) |
 
 Passwords: 8–72 characters. E-mails are stored lower-case.
 
