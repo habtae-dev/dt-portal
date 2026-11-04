@@ -109,16 +109,16 @@ const mailStatus = wrap(async (req, res) => {
   res.status(200).json({ success: true, data: { ...st, working: check.ok, error: check.ok ? undefined : check.error } });
 });
 
-// POST /api/subscribers/test  (Admin/Editor) {to?} -> sends one test message and reports the real result
-const testMail = wrap(async (req, res) => {
-  const to = str(req.body?.to, 150).toLowerCase() || String(req.user?.email || '').toLowerCase();
-  if (!EMAIL_RE.test(to)) throw new HttpError(400, 'Enter a valid e-mail address to send the test to.');
-  const r = await mail.sendMail({
-    to, subject: 'Test e-mail / የሙከራ ኢሜይል - Debre Tabor City Administration',
-    text: 'E-mail sending from the Debre Tabor portal works.\n\nከደብረ ታቦር ፖርታል ኢሜይል መላክ ይሰራል።',
-    html: mail.layout({ paragraphs: ['E-mail sending from the Debre Tabor portal works.', 'ከደብረ ታቦር ፖርታል ኢሜይል መላክ ይሰራል።'] })
-  });
-  res.status(r.sent ? 200 : 502).json({ success: r.sent, message: r.sent ? `Test e-mail sent to ${to}.` : `Could not send: ${r.error}`, to });
-});
+// // POST /api/subscribers/test  (Admin/Editor) {to?} -> sends one test message and reports the real result
+// const testMail = wrap(async (req, res) => {
+//   const to = str(req.body?.to, 150).toLowerCase() || String(req.user?.email || '').toLowerCase();
+//   if (!EMAIL_RE.test(to)) throw new HttpError(400, 'Enter a valid e-mail address to send the test to.');
+//   const r = await mail.sendMail({
+//     to, subject: 'Test e-mail / የሙከራ ኢሜይል - Debre Tabor City Administration',
+//     text: 'E-mail sending from the Debre Tabor portal works.\n\nከደብረ ታቦር ፖርታል ኢሜይል መላክ ይሰራል።',
+//     html: mail.layout({ paragraphs: ['E-mail sending from the Debre Tabor portal works.', 'ከደብረ ታቦር ፖርታል ኢሜይል መላክ ይሰራል።'] })
+//   });
+//   res.status(r.sent ? 200 : 502).json({ success: r.sent, message: r.sent ? `Test e-mail sent to ${to}.` : `Could not send: ${r.error}`, to });
+// });
 
-module.exports = { subscribe, unsubscribe, list, remove, broadcast, mailStatus, testMail };
+module.exports = { subscribe, unsubscribe, list, remove, broadcast, mailStatus };

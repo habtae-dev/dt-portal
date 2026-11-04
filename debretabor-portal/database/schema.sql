@@ -306,3 +306,37 @@ INSERT INTO city_facts (label_en, label_am, value_en, value_am, note_en, note_am
 ('Elevation', 'ከፍታ', '2,706 m', '2,706 ሜ', 'above sea level', 'ከባሕር ጠለል በላይ', '⛰️', 2);
 
 -- No users are seeded: create the first admin with `npm run create-admin` (backend/).
+
+
+
+
+
+CREATE TABLE IF NOT EXISTS city_facts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    label_en VARCHAR(100) NOT NULL,
+    label_am VARCHAR(100) NULL,
+    value_en VARCHAR(100) NOT NULL,
+    value_am VARCHAR(100) NULL,
+    note_en VARCHAR(150) NULL,
+    note_am VARCHAR(150) NULL,
+    icon VARCHAR(16) NULL,
+    sort_order INT NOT NULL DEFAULT 0,
+    is_published BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_city_facts_order (is_published, sort_order)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+
+CREATE TABLE IF NOT EXISTS subscribers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    language ENUM('en', 'am') NOT NULL DEFAULT 'en',
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    unsubscribe_token CHAR(64) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_subscribers_active (is_active)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

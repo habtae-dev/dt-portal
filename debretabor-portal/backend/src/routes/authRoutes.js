@@ -16,6 +16,6 @@ router.get('/profile', verifyToken, getAdminProfile);
 router.put('/profile', verifyToken, updateAdminProfile);
 
 // Protected route for registering new admins/editors (Only Admin can create)
-router.post('/register', verifyAdmin, registerAdmin);
+// router.post('/register', verifyAdmin, registerAdmin);
 
 module.exports = router;

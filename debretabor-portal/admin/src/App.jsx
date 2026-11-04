@@ -56,7 +56,7 @@ export default function App() {
           <Route path="business" element={<Business/>}/>
           <Route path="projects" element={<Projects/>}/>
           <Route path="council" element={<Council/>}/>
-          <Route path="subcities" element={<Executive key="subcities" initialTab="subcities" />} />
+          {/* <Route path="subcities" element={<Executive key="subcities" initialTab="subcities" />} /> */}
           <Route path="executive" element={<Executive key="executive" initialTab="executive" />} />
           <Route path="about" element={<AboutCity />} />
           <Route path="cityfacts" element={<CityFacts />} />

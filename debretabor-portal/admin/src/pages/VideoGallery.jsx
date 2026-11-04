@@ -118,7 +118,7 @@ export default function VideoGallery() {
 
       setShowModal(false);
       resetForm();
-      fetchVideos(); // 🔴 ከተቀመጠ በኋላ ሊስቱን ማደስ
+      fetchVideos(); 
     } catch (err) {
       alert(err.response?.data?.message || 'Failed to save video record.');
     }
@@ -129,7 +129,7 @@ export default function VideoGallery() {
     if (!window.confirm('Are you sure you want to delete this video?')) return;
     try {
       await axios.delete(`${API_ORIGIN}/api/videos/${id}`);
-      fetchVideos(); // 🔴 ከተሰረዘ በኋላ ሊስቱን በድጋሚ ማምጣት
+      fetchVideos(); 
     } catch (err) {
       alert('Failed to delete video.');
     }
@@ -317,6 +317,30 @@ export default function VideoGallery() {
                     value={formData.title_am}
                     onChange={(e) => setFormData({ ...formData, title_am: e.target.value })}
                     style={{ width: '100%', padding: '10px', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '6px', color: '#ffffff', boxSizing: 'border-box' }}
+                  />
+                </div>
+              </div>
+
+              {/* Descriptions Fields inside the Modal Form */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '15px' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#cbd5e1' }}>Description (English)</label>
+                  <textarea
+                    rows="3"
+                    value={formData.description_en}
+                    onChange={(e) => setFormData({ ...formData, description_en: e.target.value })}
+                    placeholder="Enter video description..."
+                    style={{ width: '100%', padding: '10px', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '6px', color: '#ffffff', boxSizing: 'border-box', resize: 'vertical' }}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '6px', fontSize: '13px', fontWeight: '600', color: '#cbd5e1' }}>Description (Amharic)</label>
+                  <textarea
+                    rows="3"
+                    value={formData.description_am}
+                    onChange={(e) => setFormData({ ...formData, description_am: e.target.value })}
+                    placeholder="የቪዲዮውን መግለጫ በአማርኛ..."
+                    style={{ width: '100%', padding: '10px', backgroundColor: '#0f172a', border: '1px solid #334155', borderRadius: '6px', color: '#ffffff', boxSizing: 'border-box', resize: 'vertical' }}
                   />
                 </div>
               </div>

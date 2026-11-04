@@ -21,7 +21,6 @@ const MENU = [
   { label: 'Doing Business', path: '/admin/business', icon: TrendingUp },
   { label: 'Projects', path: '/admin/projects', icon: Landmark },
   { label: 'City Council', path: '/admin/council', icon: Building2 },
-  { label: 'Sub-Cities', path: '/admin/subcities', icon: Users },
   { label: 'Executive Cabinet', path: '/admin/executive', icon: ShieldAlert },
   { label: 'About City', path: '/admin/about', icon: Info },
   { label: 'City Facts', path: '/admin/cityfacts', icon: MapPinned },

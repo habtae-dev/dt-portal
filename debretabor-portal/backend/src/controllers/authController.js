@@ -19,41 +19,41 @@ const passwordProblem = (pw) => {
 // Used to spend the same time on unknown e-mails as on real ones (stops account enumeration by response time).
 const DUMMY_HASH = bcrypt.hashSync('not-a-real-password', 10);
 
-// POST /api/auth/register  (Admin only)
-const registerAdmin = async (req, res) => {
-  try {
-    const username = str(req.body?.username);
-    const email = str(req.body?.email).toLowerCase();
-    const { password, role } = req.body || {};
+// // POST /api/auth/register  (Admin only)
+// const registerAdmin = async (req, res) => {
+//   try {
+//     const username = str(req.body?.username);
+//     const email = str(req.body?.email).toLowerCase();
+//     const { password, role } = req.body || {};
 
-    if (!username || !email || !password) {
-      return res.status(400).json({ success: false, message: 'Please provide all required fields.' });
-    }
-    if (username.length > 100 || email.length > 150 || !EMAIL_RE.test(email)) {
-      return res.status(400).json({ success: false, message: 'Invalid username or email.' });
-    }
-    const pwProblem = passwordProblem(password);
-    if (pwProblem) return res.status(400).json({ success: false, message: pwProblem });
-    if (role !== undefined && !ROLES.includes(role)) {
-      return res.status(400).json({ success: false, message: 'Invalid role.' });
-    }
+//     if (!username || !email || !password) {
+//       return res.status(400).json({ success: false, message: 'Please provide all required fields.' });
+//     }
+//     if (username.length > 100 || email.length > 150 || !EMAIL_RE.test(email)) {
+//       return res.status(400).json({ success: false, message: 'Invalid username or email.' });
+//     }
+//     const pwProblem = passwordProblem(password);
+//     if (pwProblem) return res.status(400).json({ success: false, message: pwProblem });
+//     if (role !== undefined && !ROLES.includes(role)) {
+//       return res.status(400).json({ success: false, message: 'Invalid role.' });
+//     }
 
-    const [existing] = await pool.query('SELECT id FROM users WHERE email = ? OR username = ?', [email, username]);
-    if (existing.length > 0) {
-      return res.status(409).json({ success: false, message: 'Username or Email already exists.' });
-    }
+//     const [existing] = await pool.query('SELECT id FROM users WHERE email = ? OR username = ?', [email, username]);
+//     if (existing.length > 0) {
+//       return res.status(409).json({ success: false, message: 'Username or Email already exists.' });
+//     }
 
-    const password_hash = await bcrypt.hash(password, 10);
-    const [result] = await pool.query(
-      'INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)',
-      [username, email, password_hash, role || 'Editor']
-    );
-    res.status(201).json({ success: true, message: 'User registered successfully', userId: result.insertId });
-  } catch (error) {
-    console.error('Registration Error:', error.message);
-    res.status(500).json({ success: false, message: 'Server error during registration.' });
-  }
-};
+//     const password_hash = await bcrypt.hash(password, 10);
+//     const [result] = await pool.query(
+//       'INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)',
+//       [username, email, password_hash, role || 'Editor']
+//     );
+//     res.status(201).json({ success: true, message: 'User registered successfully', userId: result.insertId });
+//   } catch (error) {
+//     console.error('Registration Error:', error.message);
+//     res.status(500).json({ success: false, message: 'Server error during registration.' });
+//   }
+// };
 
 // POST /api/auth/login
 const loginAdmin = async (req, res) => {
@@ -146,4 +146,4 @@ const updateAdminProfile = async (req, res) => {
   }
 };
 
-module.exports = { registerAdmin, loginAdmin, getAdminProfile, updateAdminProfile };
+module.exports = { loginAdmin, getAdminProfile, updateAdminProfile };
