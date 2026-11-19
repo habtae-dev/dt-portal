@@ -1,8 +1,6 @@
 import AboutSection from './AboutSection';
 import StaticAbout from './StaticAbout';
 import { useLanguage } from '../../context/LanguageContext';
-import img from '../../assets/geography-panorama.webp';
-
 const MAP_URL = 'https://www.google.com/maps?q=11.85,38.0167&z=13&output=embed'; // Debre Tabor, 11.85°N 38.02°E
 
 // Built-in copy, shown only until this section is published from the admin dashboard (About City -> geography).
@@ -57,20 +55,44 @@ const DATA = {
   showLess_en: "Show Less"
 };
 
-function GeographyStatic() {
+//if you want to add a map, it should be above all static texts, so that it is the first thing the user sees when they visit this page.
+function MapHeader() {
   const { pick } = useLanguage();
   return (
-    <StaticAbout data={DATA} image={img}>
-      <figure className="mb-8">
-        <div className="h-72 sm:h-96 w-full overflow-hidden rounded-lg border border-gray-200">
-          <iframe title="Debre Tabor map" src={MAP_URL} className="h-full w-full" style={{ border: 0 }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
-        </div>
-        <figcaption className="mt-2 text-xs sm:text-sm text-gray-500">{pick(DATA, 'mapCaption')}</figcaption>
-      </figure>
+    <figure className="mb-6">
+      <div className="h-72 sm:h-96 w-full overflow-hidden rounded-lg border border-gray-200 shadow-sm">
+        <iframe 
+          title="Debre Tabor map" 
+          src={MAP_URL} 
+          className="h-full w-full" 
+          style={{ border: 0 }} 
+          loading="lazy" 
+          referrerPolicy="no-referrer-when-downgrade" 
+          allowFullScreen 
+        />
+      </div>
+      <figcaption className="mt-2 text-xs sm:text-sm text-gray-500">
+        {pick(DATA, 'mapCaption')}
+      </figcaption>
+    </figure>
+  );
+}
+
+function GeographyStatic() {
+  return (
+    <StaticAbout data={DATA} >
+      {/*map is above all static texts */}
+      <MapHeader />
     </StaticAbout>
   );
 }
 
 export default function Geography() {
-  return <AboutSection category="geography" fallback={<GeographyStatic />} />;
+  return (
+    <AboutSection 
+      category="geography" 
+      mapHeader={<MapHeader />} 
+      fallback={<GeographyStatic />} 
+    />
+  );
 }

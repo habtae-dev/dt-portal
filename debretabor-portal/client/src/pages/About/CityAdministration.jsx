@@ -1,6 +1,6 @@
 import AboutSection from './AboutSection';
 import StaticAbout from './StaticAbout';
-import img from '../../assets/city-administration.jpg';
+import img from '../../assets/image.png';
 
 // Built-in copy, shown only until this section is published from the admin dashboard (About City -> city_administration).
 const DATA = {

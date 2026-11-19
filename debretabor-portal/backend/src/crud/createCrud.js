@@ -192,27 +192,36 @@ function createCrud(config) {
     };
   };
 
-  const listHandler = (publicOnly) =>
+const listHandler = (publicOnly) =>
     wrap(async (req, res) => {
       const { where, params } = buildWhere(req, publicOnly);
+      
+      const DEFAULT_LIMIT = 10;
       const limit = Math.min(
-        Math.max(parseInt(req.query.limit, 10) || MAX_ROWS, 1),
+        Math.max(parseInt(req.query.limit, 10) || DEFAULT_LIMIT, 1),
         MAX_ROWS,
       );
       const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
+      
       const [rows] = await pool.query(
         `${select} ${where} ORDER BY ${orderBy} LIMIT ? OFFSET ?`,
         [...params, limit, (page - 1) * limit],
       );
-      const out = { success: true, count: rows.length, data: rows };
-      if (req.query.limit !== undefined) {
-        const [[{ total }]] = await pool.query(
-          `SELECT COUNT(*) AS total FROM ${table} t ${where}`,
-          params,
-        );
-        Object.assign(out, { total, page, limit });
-      }
-      res.status(200).json(out);
+
+      const [[{ total }]] = await pool.query(
+        `SELECT COUNT(*) AS total FROM ${table} t ${where}`,
+        params,
+      );
+
+      // sending response with pagination info
+      res.status(200).json({
+        success: true,
+        count: rows.length,
+        total,
+        page,
+        limit,
+        data: rows
+      });
     });
 
   // ---- handlers ----------------------------------------------------------------------------------------
@@ -349,7 +358,7 @@ function createCrud(config) {
     update,
     upsert,
     remove,
-    _readInput: readInput, // exposed for unit tests
+    // _readInput: readInput, // exposed for unit tests
   };
 }
 

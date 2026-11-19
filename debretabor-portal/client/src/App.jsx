@@ -17,6 +17,7 @@ import CouncilPage from './pages/Council/CouncilPage';
 import ProjectsPage from './pages/Projects/ProjectsPage';
 import ServicesPage from './pages/Services/ServicesPage';
 import PlacesPage from './pages/Explore/PlacesPage';
+import PlaceDetailPage from './pages/Explore/PlaceDetailPage'; // 🌟 አዲሱ Detail Component
 import DoingBusinessPage from './pages/Explore/DoingBusinessPage';
 import GalleryPage from './pages/Media/GalleryPage';
 import VideosPage from './pages/Media/VideosPage';
@@ -53,8 +54,14 @@ const ROUTES = [
   ['/services/online', <ServicesPage key="services" />],
 
   ['/explore/park', <PlacesPage key="park" category="Park" />],
+  ['/explore/park/:id', <PlaceDetailPage key="park-detail" category="Park" />],
+  
   ['/explore/monument', <PlacesPage key="monument" category="Monument" />],
+  ['/explore/monument/:id', <PlaceDetailPage key="monument-detail" category="Monument" />],
+  
   ['/explore/museum', <PlacesPage key="museum" category="Museum" />],
+  ['/explore/museum/:id', <PlaceDetailPage key="museum-detail" category="Museum" />],
+  
   ['/explore/business', <DoingBusinessPage key="business" />],
 
   ['/resources/media/gallery', <GalleryPage key="gallery" />],

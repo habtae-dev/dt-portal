@@ -1,10 +1,3 @@
-// components/public/AccessibilityBar.jsx
-// A slim strip above the main header exposing the three accessibility
-// controls required by the spec: font scaling (100–150%), a theme cycle
-// (default / high-visibility / dark), and language toggle (EN/AM). All the
-// underlying state already lives in ThemeContext/LanguageContext — this
-// component is just the missing UI that triggers it.
-
 import { useTheme } from "../context/ThemeContext";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -19,7 +12,8 @@ export default function AccessibilityBar() {
   const { lang, toggleLang } = useLanguage();
 
   return (
-    <div className="hidden sm:flex items-center justify-end gap-4 bg-[#003366] text-white text-[11px] px-4 lg:px-6 py-1.5">
+    /* hidden sm:flex የሚለውን ወደ flex እና overflow-x-auto ቀይረነዋል */
+    <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 sm:gap-4 bg-[#003366] text-white text-[11px] px-3 sm:px-4 lg:px-6 py-1.5">
       {/* Font scale */}
       <div className="flex items-center gap-1.5" role="group" aria-label="Text size">
         <span className="opacity-80">{lang === "am" ? "ፊደል" : "Text"}</span>
@@ -32,7 +26,7 @@ export default function AccessibilityBar() {
         >
           −
         </button>
-        <span className="w-8 text-center tabular-nums">{fontScale}%</span>
+        <span className="w-7 sm:w-8 text-center tabular-nums">{fontScale}%</span>
         <button
           type="button"
           onClick={increaseFont}
@@ -44,29 +38,34 @@ export default function AccessibilityBar() {
         </button>
       </div>
 
-      <span className="h-3 w-px bg-white/20" />
+      <span className="hidden xs:inline h-3 w-px bg-white/20" />
 
-      {/* Theme cycle */}
-      <button
-        type="button"
-        onClick={cycleTheme}
-        className="flex items-center gap-1.5 rounded border border-white/30 px-2 py-0.5 hover:bg-white/10"
-        aria-label="Switch theme"
-      >
-        <span aria-hidden>{theme === "dark" ? "🌙" : theme === "high-visibility" ? "◐" : "☀"}</span>
-        {THEME_LABELS[theme][lang] || THEME_LABELS[theme].en}
-      </button>
+      {/* Theme cycle & Language Toggle Container */}
+      <div className="flex items-center gap-2">
+        {/* Theme cycle */}
+        <button
+          type="button"
+          onClick={cycleTheme}
+          className="flex items-center gap-1.5 rounded border border-white/30 px-2 py-0.5 hover:bg-white/10"
+          aria-label="Switch theme"
+        >
+          <span aria-hidden>{theme === "dark" ? "🌙" : theme === "high-visibility" ? "◐" : "☀"}</span>
+          <span className="truncate max-w-[80px] sm:max-w-none">
+            {THEME_LABELS[theme][lang] || THEME_LABELS[theme].en}
+          </span>
+        </button>
 
-      <span className="h-3 w-px bg-white/20" />
+        <span className="h-3 w-px bg-white/20" />
 
-      {/* Language toggle */}
-      <button
-        type="button"
-        onClick={toggleLang}
-        className="rounded border border-white/30 px-2 py-0.5 font-bold hover:bg-white/10"
-      >
-        {lang === "en" ? "አማርኛ" : "English"}
-      </button>
+        {/* Language toggle */}
+        <button
+          type="button"
+          onClick={toggleLang}
+          className="rounded border border-white/30 px-2 py-0.5 font-bold hover:bg-white/10"
+        >
+          {lang === "en" ? "አማርኛ" : "English"}
+        </button>
+      </div>
     </div>
   );
 }

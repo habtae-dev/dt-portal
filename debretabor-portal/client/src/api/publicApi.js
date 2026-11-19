@@ -37,9 +37,10 @@ export const fetchCouncil = (subcategory) => list('/council', { subcategory }); 
 export const fetchAbout = (category) => list('/about', { category }).then((rows) => rows[0] || null);
 
 // ---- Explore, projects, media ----
-export const fetchPlaces = (category) => list('/places', { category });         // Park | Monument | Museum
-export const fetchBusiness = (category) => list('/business', { category });
-export const fetchProjects = (category) => list('/projects', { category });     // Program | Project
+export const fetchPlaces = (params) => page('/places', params); // { category, page, limit } -> { data, total, page, limit }
+export const fetchPlaceById = (id) => one(`/places/${id}`);
+export const fetchBusiness = (params) => page('/business', params);
+export const fetchProjects = (category) => list('/projects', { category });    // Program | Project
 export const fetchPhotos = () => list('/photos');
 export const fetchVideos = () => list('/videos');
 

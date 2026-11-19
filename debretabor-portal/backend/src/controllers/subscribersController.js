@@ -4,7 +4,7 @@ const HttpError = require('../utils/HttpError');
 const mail = require('../utils/mailer');
 
 const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const EMAIL_RE = /^[^\s@]+@(?:[^\s@.]+\.)+[a-zA-Z]{2,}$/;
 const TOKEN_RE = /^[a-f0-9]{64}$/;
 const str = (v, max) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 

@@ -180,7 +180,7 @@ export default function MegaMenuHeader() {
   const [mobileExpandedMenu, setMobileExpandedMenu] = useState(null);
   const [mobileExpandedSub, setMobileExpandedSub] = useState(null);
 
-  // Search Expand States (AAU Style)
+  // Search Expand States 
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -483,7 +483,7 @@ export default function MegaMenuHeader() {
         </div>
 
         {/* ========================================== */}
-        {/* AAU-Style Full-Width Expandable Search Bar */}
+        {/*Full-Width Expandable Search Bar (With Search Button) */}
         {/* ========================================== */}
         {searchOpen && (
           <div className="absolute inset-0 bg-white z-[100] flex items-center px-4 lg:px-6 w-full h-full animate-in fade-in duration-150">
@@ -513,10 +513,18 @@ export default function MegaMenuHeader() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={lang === 'am' ? 'በደብረ ታቦር ከተማ ፖርታል ይፈልጉ (ለምሳሌ ከንቲባ፣ ጨረታ)...' : 'Search Debre Tabor City Portal (e.g., Mayor, Tender)...'}
-                  className="w-full text-lg lg:text-xl text-gray-800 placeholder-gray-400 focus:outline-none bg-transparent"
+                  className="w-full text-base lg:text-xl text-gray-800 placeholder-gray-400 focus:outline-none bg-transparent"
                   autoFocus
                 />
               </div>
+
+              {/*Search Button)  */}
+              <button
+                type="submit"
+                className="bg-[#004280] hover:bg-[#003366] text-white px-4 lg:px-6 py-2 rounded-md font-bold text-xs lg:text-sm transition-colors flex-shrink-0"
+              >
+                {lang === 'am' ? 'ፈልግ' : 'Search'}
+              </button>
 
               {/* Close Button */}
               <button

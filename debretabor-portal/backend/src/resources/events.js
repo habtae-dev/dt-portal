@@ -18,6 +18,6 @@ module.exports = {
   files: { image: { column: 'image_url' } },
   publicWhere: 't.is_published = 1',
   search: ['title_en', 'title_am', 'location_en', 'location_am'],
-  orderBy: 't.event_date ASC',
+  orderBy: 't.created_at DESC',
   validate: (r) => (r.start_time && r.end_time && r.end_time < r.start_time ? { end_time: 'end_time must not be before start_time' } : {})
 };
